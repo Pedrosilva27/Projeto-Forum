@@ -91,6 +91,11 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    public void setFieldsBlank() {
+    	Assunto.setText("");
+    	Reclamação.setText("");
+    }
 
     private void AssuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssuntoActionPerformed
         // TODO add your handling code here:
@@ -107,10 +112,9 @@ public class Principal extends javax.swing.JFrame {
         try {
 	        ConexaoBanco.inserirForum(assunto, reclamacao);
 	        javax.swing.JOptionPane.showMessageDialog(this, "Reclamação realizada com sucesso!");
-	         
-	        Main mainTela = new Main();
-	        mainTela.setVisible(true);
-	
+	        setFieldsBlank();
+	        
+	        
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
