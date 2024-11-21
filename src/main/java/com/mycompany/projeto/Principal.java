@@ -1,5 +1,7 @@
 package com.mycompany.projeto;
 
+import com.projeto.database.ConexaoBanco;
+
 public class Principal extends javax.swing.JFrame {
 
     public Principal() {
@@ -95,8 +97,26 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_AssuntoActionPerformed
 
     private void EnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EnviarActionPerformed
+        String assunto = Assunto.getText();
+        String reclamacao = Reclamação.getText(); 
+        if(assunto.isEmpty() || reclamacao.isEmpty()) { 
+        	javax.swing.JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+	        return;
+        }
+   
+        try {
+	        ConexaoBanco.inserirForum(assunto, reclamacao);
+	        javax.swing.JOptionPane.showMessageDialog(this, "Reclamação realizada com sucesso!");
+	         
+	        Main mainTela = new Main();
+	        mainTela.setVisible(true);
+	
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+	    }
+    }
+
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
