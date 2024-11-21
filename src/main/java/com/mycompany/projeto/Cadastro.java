@@ -1,14 +1,16 @@
 package com.mycompany.projeto;
 
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
+
+import com.projeto.database.ConexaoBanco;
 
 public class Cadastro extends javax.swing.JFrame {
 
+	private static final long serialVersionUID = 1L;
+	
     public Cadastro() {
         initComponents();
     }
@@ -135,65 +137,37 @@ public class Cadastro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarActionPerformed
-    String nome = Nome.getText();
-    String email = Email.getText();
-    String senhaTexto = new String(senha.getPassword());
-    String confirmarSenhaTexto = new String(confirmar.getPassword());
-
-    // Verifica se os campos estão preenchidos
-    if (nome.isEmpty() || email.isEmpty() || senhaTexto.isEmpty() || confirmarSenhaTexto.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // Verifica se as senhas coincidem
-    if (!senhaTexto.equals(confirmarSenhaTexto)) {
-        javax.swing.JOptionPane.showMessageDialog(this, "As senhas não coincidem!", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Conexão com o banco
-    String url = "jdbc:mysql://localhost:3306/meu_banco"; // Substitua pelo nome do seu banco
-    String user = "root"; // Usuário do MySQL
-    String password = ""; // Senha do MySQL
-
-    try (Connection conexao = DriverManager.getConnection(url, user, password)) {
-        
-        // Verificar se o email já existe
-        String sqlCheckEmail = "SELECT COUNT(*) FROM tabela_cadastro WHERE email = ?";
-        PreparedStatement stmtCheck = conexao.prepareStatement(sqlCheckEmail);
-        stmtCheck.setString(1, email);
-        ResultSet rs = stmtCheck.executeQuery();
-
-        if (rs.next() && rs.getInt(1) > 0) {
-            // Se o email já existir, exibe uma mensagem e não realiza o cadastro
-            javax.swing.JOptionPane.showMessageDialog(this, "Este email já está cadastrado!", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Inserir dados na tabela
-        String sqlInsert = "INSERT INTO tabela_cadastro (nome, email, senha) VALUES (?, ?, ?)";
-        PreparedStatement stmtInsert = conexao.prepareStatement(sqlInsert);
-        stmtInsert.setString(1, nome);
-        stmtInsert.setString(2, email);
-        stmtInsert.setString(3, senhaTexto); // Armazene a senha em texto simples apenas para aprendizado; na prática, use hashing.
-
-        // Executa o comando SQL
-        stmtInsert.executeUpdate();
-
-        // Exibe mensagem de sucesso
-        javax.swing.JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
-
-        // Fecha a janela de cadastro e abre a tela de login
-        this.dispose();
-        Main mainTela = new Main();
-        mainTela.setVisible(true);
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
+    private void CadastrarActionPerformed(ActionEvent evt) {//GEN-FIRST:event_CadastrarActionPerformed
+	    String nome = Nome.getText();
+	    String email = Email.getText();
+	    String senhaTexto = new String(senha.getPassword());
+	    String confirmarSenhaTexto = new String(confirmar.getPassword());
+	
+	    // Verifica se os campos estão preenchidos
+	    if (nome.isEmpty() || email.isEmpty() || senhaTexto.isEmpty() || confirmarSenhaTexto.isEmpty()) {
+	        javax.swing.JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+	        return;
+	    }
+	
+	    // Verifica se as senhas coincidem
+	    if (!senhaTexto.equals(confirmarSenhaTexto)) {
+	        javax.swing.JOptionPane.showMessageDialog(this, "As senhas não coincidem!", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+	    try {
+	        ConexaoBanco.inserirDados(nome, email, senhaTexto);
+	        javax.swing.JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
+	        
+	        // Fecha a janela de cadastro e abre a tela de login
+	        
+	        this.dispose();
+	        Main mainTela = new Main();
+	        mainTela.setVisible(true);
+	
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+	    }
     }//GEN-LAST:event_CadastrarActionPerformed
 
     private void NomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NomeActionPerformed

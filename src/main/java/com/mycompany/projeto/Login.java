@@ -1,9 +1,8 @@
 package com.mycompany.projeto;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.projeto.database.ConexaoBanco;
 
 public class Login extends javax.swing.JFrame {
 
@@ -129,50 +128,40 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_EmailActionPerformed
 
     private void ConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConectarActionPerformed
-    String email = Email.getText(); // emailField é o campo de texto para o email
-    String senhaTexto = new String(Senha.getPassword()); // senhaField é o campo para a senha
-    
-    // Verifica se os campos estão preenchidos
-    if (email.isEmpty() || senhaTexto.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, preencha ambos os campos!", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-        return;
+	    String email = Email.getText(); // emailField é o campo de texto para o email
+	    String senhaTexto = new String(Senha.getPassword()); // senhaField é o campo para a senha
+	    
+	    // Verifica se os campos estão preenchidos
+	    if (email.isEmpty() || senhaTexto.isEmpty()) {
+	        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, preencha ambos os campos!", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+	
+	    try {
+	        boolean autenticado = ConexaoBanco.findByEmail(email, senhaTexto);
+	      
+	        if (autenticado) {
+	            javax.swing.JOptionPane.showMessageDialog(this, 
+	                "Login bem-sucedido!", 
+	                "Sucesso", 
+	                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+	            this.dispose();
+	            Principal telaPrincipal = new Principal(); 
+	            telaPrincipal.setVisible(true);
+	        } else {
+	            javax.swing.JOptionPane.showMessageDialog(this, 
+	                "Credenciais inválidas. Tente novamente.", 
+	                "Erro", 
+	                javax.swing.JOptionPane.ERROR_MESSAGE);
+	        }
+	    } catch (SQLException e) {
+	        javax.swing.JOptionPane.showMessageDialog(this, 
+	            "Erro ao conectar ao banco de dados: " + e.getMessage(), 
+	            "Erro", 
+	            javax.swing.JOptionPane.ERROR_MESSAGE);
+	        e.printStackTrace();
+	    }
     }
-
-    // Conexão com o banco de dados
-    String url = "jdbc:mysql://localhost:3306/meu_banco"; // Substitua com o nome do seu banco
-    String user = "root"; // Usuário do MySQL
-    String password = ""; // Senha do MySQL
-
-    try (Connection conexao = DriverManager.getConnection(url, user, password)) {
-        // Consulta SQL para verificar o email e a senha
-        String sql = "SELECT * FROM tabela_cadastro WHERE email = ? AND senha = ?";
-        PreparedStatement stmt = conexao.prepareStatement(sql);
-        stmt.setString(1, email);
-        stmt.setString(2, senhaTexto); // Aqui estamos comparando a senha em texto simples, mas na prática use hashing
-
-        // Executa a consulta
-        ResultSet rs = stmt.executeQuery();
-
-        // Verifica se o usuário foi encontrado
-        if (rs.next()) {
-            // Login bem-sucedido
-            javax.swing.JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
-
-            // Fecha a tela de login
-            this.dispose();
-
-            // Abre a tela principal
-            Principal principalTela = new Principal(); // Substitua "Principal" pela sua tela principal
-            principalTela.setVisible(true);
-        } else {
-            // Senha ou email incorretos
-            javax.swing.JOptionPane.showMessageDialog(this, "Email ou senha incorretos. Tente novamente.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao realizar login: " + e.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
-    }//GEN-LAST:event_ConectarActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
