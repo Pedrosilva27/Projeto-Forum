@@ -5,6 +5,6 @@
 
     CREATE TABLE tabela_cadastro (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        assunto VARCHAR(255) NOT NULL UNIQUE,
+        assunto VARCHAR(255) NOT NULL,
         reclamacao VARCHAR(255) NOT NULL
     );
