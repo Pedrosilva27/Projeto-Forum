@@ -3,7 +3,8 @@
 
 ###AQUI A TABLE: 
 
-    CREATE TABLE tabela_cadastro (
+    CREATE TABLE tabela_forum
+    (
         id INT AUTO_INCREMENT PRIMARY KEY,
         assunto VARCHAR(255) NOT NULL,
         reclamacao VARCHAR(255) NOT NULL
