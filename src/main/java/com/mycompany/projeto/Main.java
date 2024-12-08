@@ -26,7 +26,7 @@ public class Main extends javax.swing.JFrame {
 
         Conectar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         Conectar.setText("Conectar");
-        Conectar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Conectar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         Conectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConectarActionPerformed(evt);
@@ -35,7 +35,7 @@ public class Main extends javax.swing.JFrame {
 
         Cadastrar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         Cadastrar.setText("Cadastrar");
-        Cadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Cadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         Cadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CadastrarActionPerformed(evt);

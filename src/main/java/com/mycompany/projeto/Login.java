@@ -21,6 +21,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         EsqueceuSenha = new javax.swing.JButton();
         Conectar = new javax.swing.JButton();
+        Home = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(700, 500));
@@ -64,6 +65,13 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        Home.setText("Home");
+        Home.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HomeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,6 +99,10 @@ public class Login extends javax.swing.JFrame {
                         .addGap(108, 108, 108)
                         .addComponent(Conectar)))
                 .addGap(208, 208, 208))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addComponent(Home)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,7 +121,9 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(EsqueceuSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Conectar)
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addComponent(Home)
+                .addGap(56, 56, 56))
         );
 
         pack();
@@ -127,7 +141,13 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_EmailActionPerformed
 
-    private void ConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConectarActionPerformed
+    private void HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeActionPerformed
+        Main m = new Main();
+        m.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_HomeActionPerformed
+
+    private void ConectarActionPerformed(java.awt.event.ActionEvent evt) {                                         
 	    String email = Email.getText(); // emailField é o campo de texto para o email
 	    String senhaTexto = new String(Senha.getPassword()); // senhaField é o campo para a senha
 	    
@@ -175,6 +195,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton Conectar;
     private javax.swing.JTextField Email;
     private javax.swing.JButton EsqueceuSenha;
+    private javax.swing.JButton Home;
     private javax.swing.JPasswordField Senha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -18,13 +18,13 @@ public class Principal extends javax.swing.JFrame {
         Assunto = new javax.swing.JTextField();
         Reclamação = new javax.swing.JTextField();
         Enviar = new javax.swing.JButton();
+        Home1 = new javax.swing.JButton();
         Menu = new javax.swing.JMenuBar();
         sair = new javax.swing.JMenu();
 
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(700, 500));
 
         jLabel2.setText("Assunto");
 
@@ -45,6 +45,8 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        Home1.setText("Home");
+
         Menu.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         Menu.setBorderPainted(false);
 
@@ -58,19 +60,24 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(164, 164, 164)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Reclamação, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(164, 164, 164)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Reclamação, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Assunto, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(122, 122, 122)
+                                .addComponent(Enviar))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Assunto, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(122, 122, 122)
-                        .addComponent(Enviar)))
+                        .addGap(31, 31, 31)
+                        .addComponent(Home1)))
                 .addContainerGap(205, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -86,7 +93,9 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(Reclamação, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(Enviar)
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addComponent(Home1)
+                .addGap(33, 33, 33))
         );
 
         pack();
@@ -101,7 +110,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_AssuntoActionPerformed
 
-    private void EnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarActionPerformed
+    private void EnviarActionPerformed(java.awt.event.ActionEvent evt) {                                       
         String assunto = Assunto.getText();
         String reclamacao = Reclamação.getText(); 
         if(assunto.isEmpty() || reclamacao.isEmpty()) { 
@@ -133,6 +142,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Assunto;
     private javax.swing.JButton Enviar;
+    private javax.swing.JButton Home1;
     private javax.swing.JMenuBar Menu;
     private javax.swing.JTextField Reclamação;
     private javax.swing.JLabel jLabel1;
