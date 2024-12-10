@@ -5,13 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
 
 public class ConexaoBanco {
 
 	// Configurações de credenciais com o MySQL via XAMP
 	 private static final String URL = "jdbc:mysql://localhost:3306/meu_banco"; 
-	    private static final String USER = "root"; 
-	    private static final String PASSWORD = ""; 
+	    private static final String USER = "nickciuffi"; 
+	    private static final String PASSWORD = "Niisaricris1"; 
 	    
 	    
 	public static Connection getConexao() throws SQLException {
@@ -28,6 +29,26 @@ public class ConexaoBanco {
 			}
 		}
 	}
+        
+          public static DefaultTableModel carregaReclamacoes() throws Exception{
+            DefaultTableModel modelo = new DefaultTableModel(new String[]{"Assunto", "Reclamação"}, 0);
+
+            String sql = "SELECT assunto, reclamacao FROM tabela_forum";
+
+            try (Connection conexao = getConexao(); PreparedStatement st = conexao.prepareStatement(sql)) {
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
+                        // Adiciona as duas strings na tabela
+                        String assunto = rs.getString("assunto");
+                        String reclamacao = rs.getString("reclamacao");
+                        modelo.addRow(new Object[]{assunto, reclamacao});
+                    }
+                }
+            } catch (Exception e) {
+                throw new Exception("Algo deu errado");
+            }
+            return modelo;
+        }
 
 	// Método para inserir dados
 	public static void inserirDados(String nome, String email, String senha) throws SQLException {

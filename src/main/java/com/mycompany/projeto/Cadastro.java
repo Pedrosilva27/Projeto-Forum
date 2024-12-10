@@ -35,7 +35,7 @@ public class Cadastro extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(700, 500));
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 36)); // NOI18N
-        jLabel1.setText("Casdastro");
+        jLabel1.setText("Cadastro");
 
         jLabel2.setText("Nome:");
 

@@ -119,7 +119,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="sansserif" size="36" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Casdastro"/>
+        <Property name="text" type="java.lang.String" value="Cadastro"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
