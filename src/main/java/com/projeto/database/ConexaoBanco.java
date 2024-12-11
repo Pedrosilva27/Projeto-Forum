@@ -1,5 +1,6 @@
 package com.projeto.database;
 
+import Enums.Assuntos;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,8 +12,8 @@ public class ConexaoBanco {
 
 	// Configurações de credenciais com o MySQL via XAMP
 	 private static final String URL = "jdbc:mysql://localhost:3306/meu_banco"; 
-	    private static final String USER = "nickciuffi"; 
-	    private static final String PASSWORD = "Niisaricris1"; 
+	    private static final String USER = "user"; 
+	    private static final String PASSWORD = ""; 
 	    
 	    
 	public static Connection getConexao() throws SQLException {
@@ -51,7 +52,7 @@ public class ConexaoBanco {
         }
 
 	// Método para inserir dados
-	public static void inserirDados(String nome, String email, String senha) throws SQLException {
+	public static void cadastrarUser(String nome, String email, String senha) throws SQLException {
 		if (emailExiste(email)) {
 			throw new SQLException("Email já existe no banco de dados");
 		}
@@ -61,11 +62,12 @@ public class ConexaoBanco {
 			stmt.setString(2, email);
 			stmt.setString(3, senha);
 			stmt.executeUpdate();
+                        
 		}
 	}
 
 	// Método para buscar e autenticar usuário no banco de dados
-	public static boolean findByEmail(String email, String senha) throws SQLException {
+	public static boolean loginUser(String email, String senha) throws SQLException {
 		String sql = "SELECT senha FROM tabela_cadastro WHERE email = ?";
 		PreparedStatement st = null;
 		try (Connection conexao = getConexao()) {
@@ -90,13 +92,16 @@ public class ConexaoBanco {
 	}
 	
 	// Método para inserir dados do forum 
-	public static void inserirForum(String assunto, String reclamacao) throws SQLException {
+	public static void inserirForum(Assuntos assunto, String reclamacao) throws SQLException {
 		String sql = "INSERT INTO tabela_forum (assunto, reclamacao) VALUES (?, ?)";
 		try (Connection conexao = getConexao(); PreparedStatement st = conexao.prepareStatement(sql)) {
-			st.setString(1, assunto);
+			st.setString(1, String.valueOf(assunto));
 			st.setString(2, reclamacao);
 			st.executeUpdate();
 		}
+                catch(SQLException e){
+                    throw new SQLException(e.getMessage());
+                }
 	}
 
 }

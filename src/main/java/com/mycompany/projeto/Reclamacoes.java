@@ -4,6 +4,7 @@
  */
 package com.mycompany.projeto;
 
+import Classes.Reclamacao;
 import com.projeto.database.ConexaoBanco;
 import javax.swing.table.DefaultTableModel;
 
@@ -150,7 +151,7 @@ public class Reclamacoes extends javax.swing.JFrame {
     
     public void carregaReclamacoes(){
         try{
-            DefaultTableModel modelo = ConexaoBanco.carregaReclamacoes();
+            DefaultTableModel modelo = Reclamacao.buscaReclamacoes();
             // Aplica o modelo à tabela
             TbReclamacoes.setModel(modelo);
         }

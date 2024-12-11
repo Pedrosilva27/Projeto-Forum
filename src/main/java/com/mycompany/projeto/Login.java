@@ -1,5 +1,6 @@
 package com.mycompany.projeto;
 
+import Classes.Usuario;
 import java.sql.SQLException;
 
 import com.projeto.database.ConexaoBanco;
@@ -20,6 +21,8 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Conectar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(700, 500));
@@ -54,14 +57,30 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setForeground(new java.awt.Color(0, 51, 255));
+        jLabel4.setText("Ainda não tem conta?");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+
+        jButton1.setText("Voltar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(213, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(197, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(jButton1)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
@@ -70,19 +89,22 @@ public class Login extends javax.swing.JFrame {
                                 .addGap(47, 47, 47)
                                 .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Email)
-                                    .addComponent(Senha, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(208, 208, 208))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(Conectar)
-                        .addGap(286, 286, 286))))
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Conectar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel4))
+                                    .addComponent(Email, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Senha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(208, 208, 208))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(137, 137, 137)
+                .addGap(79, 79, 79)
+                .addComponent(jButton1)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -93,7 +115,9 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(Senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(Conectar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Conectar)
+                    .addComponent(jLabel4))
                 .addContainerGap(182, Short.MAX_VALUE))
         );
 
@@ -108,40 +132,48 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_EmailActionPerformed
 
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+            this.dispose();
+            Cadastro cad = new Cadastro(); 
+            cad.setVisible(true);
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+            Main m = new Main();
+            m.setVisible(true);
+            this.dispose();
+    }//GEN-LAST:event_jButton1MouseClicked
+
     private void ConectarActionPerformed(java.awt.event.ActionEvent evt) {                                         
 	    String email = Email.getText(); // emailField é o campo de texto para o email
 	    String senhaTexto = new String(Senha.getPassword()); // senhaField é o campo para a senha
-	    
-	    // Verifica se os campos estão preenchidos
-	    if (email.isEmpty() || senhaTexto.isEmpty()) {
+            
+            if (email.isEmpty() || senhaTexto.isEmpty()) {
 	        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, preencha ambos os campos!", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
 	        return;
 	    }
+            
+            //Cria uma instancia de usuario
+            Usuario user = new Usuario(email, senhaTexto);
+           
 	
-	    try {
-	        boolean autenticado = ConexaoBanco.findByEmail(email, senhaTexto);
-	      
-	        if (autenticado) {
-	            javax.swing.JOptionPane.showMessageDialog(this, 
-	                "Login bem-sucedido!", 
-	                "Sucesso", 
-	                javax.swing.JOptionPane.INFORMATION_MESSAGE);
-	            this.dispose();
-	            Reclamacoes telaPrincipal = new Reclamacoes(); 
-	            telaPrincipal.setVisible(true);
-	        } else {
-	            javax.swing.JOptionPane.showMessageDialog(this, 
-	                "Credenciais inválidas. Tente novamente.", 
-	                "Erro", 
-	                javax.swing.JOptionPane.ERROR_MESSAGE);
-	        }
-	    } catch (SQLException e) {
-	        javax.swing.JOptionPane.showMessageDialog(this, 
-	            "Erro ao conectar ao banco de dados: " + e.getMessage(), 
-	            "Erro", 
-	            javax.swing.JOptionPane.ERROR_MESSAGE);
-	        e.printStackTrace();
-	    }
+            boolean autenticado = user.login();
+
+            if (autenticado) {
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Login bem-sucedido!", 
+                    "Sucesso", 
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                Reclamacoes telaPrincipal = new Reclamacoes(); 
+                telaPrincipal.setVisible(true);
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Credenciais inválidas. Tente novamente.", 
+                    "Erro", 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+	   
     }
 
     public static void main(String args[]) {
@@ -156,8 +188,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton Conectar;
     private javax.swing.JTextField Email;
     private javax.swing.JPasswordField Senha;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }

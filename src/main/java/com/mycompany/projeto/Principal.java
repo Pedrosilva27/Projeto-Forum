@@ -1,5 +1,7 @@
 package com.mycompany.projeto;
 
+import Classes.Reclamacao;
+import Enums.Assuntos;
 import com.projeto.database.ConexaoBanco;
 
 public class Principal extends javax.swing.JFrame {
@@ -15,7 +17,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        Reclamação = new javax.swing.JTextField();
+        JReclamação = new javax.swing.JTextField();
         Enviar = new javax.swing.JButton();
         Home1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -31,7 +33,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel3.setText("Reclamação");
 
-        Reclamação.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        JReclamação.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         Enviar.setText("Enviar");
         Enviar.addActionListener(new java.awt.event.ActionListener() {
@@ -78,7 +80,7 @@ public class Principal extends javax.swing.JFrame {
                                     .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Reclamação, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                                    .addComponent(JReclamação, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                                     .addComponent(Assunto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(52, 52, 52)
@@ -104,7 +106,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(Reclamação, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JReclamação, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(Enviar)
                 .addContainerGap(139, Short.MAX_VALUE))
@@ -115,7 +117,7 @@ public class Principal extends javax.swing.JFrame {
     
     public void setFieldsBlank() {
     	Assunto.setSelectedIndex(0);
-    	Reclamação.setText("");
+    	JReclamação.setText("");
     }
 
     private void Home1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Home1ActionPerformed
@@ -125,23 +127,22 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_Home1ActionPerformed
 
     private void EnviarActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        String assunto = Assunto.getItemAt(Assunto.getSelectedIndex());
-        String reclamacao = Reclamação.getText(); 
-        if(assunto.isEmpty() || reclamacao.isEmpty()) { 
+        Assuntos assunto = Assuntos.valueOf(Assunto.getItemAt(Assunto.getSelectedIndex()));
+        String reclamacao = JReclamação.getText(); 
+        if(reclamacao.isEmpty()) { 
         	javax.swing.JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
 	        return;
         }
-   
-        try {
-	        ConexaoBanco.inserirForum(assunto, reclamacao);
-	        javax.swing.JOptionPane.showMessageDialog(this, "Reclamação realizada com sucesso!");
+        Reclamacao reclama = new Reclamacao(assunto, reclamacao);
+        
+        if(reclama.adicionar()){
+            javax.swing.JOptionPane.showMessageDialog(this, "Reclamação realizada com sucesso!");
 	        setFieldsBlank();
-	        
-	        
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-	    }
+                return;
+        }
+        
+	javax.swing.JOptionPane.showMessageDialog(this, "Erro ao cadastrar");
+	   
     }
 
 
@@ -157,8 +158,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> Assunto;
     private javax.swing.JButton Enviar;
     private javax.swing.JButton Home1;
+    private javax.swing.JTextField JReclamação;
     private javax.swing.JMenuBar Menu;
-    private javax.swing.JTextField Reclamação;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
